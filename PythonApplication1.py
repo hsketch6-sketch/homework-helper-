@@ -5,7 +5,7 @@ import base64
 import hashlib
 
 # 페이지 설정
-st.set_page_config(page_title="우리의 암호 메세지")
+st.set_page_config(page_title="수학 기출문제 모음집")
 
 # 🔑 비밀번호 → Fernet 키 변환 함수
 def make_key(password: str):
@@ -16,7 +16,7 @@ if st.sidebar.text_input("🔑 우리끼리 비밀번호", type="password") != "
     st.warning("비밀번호를 입력해야 사용할 수 있어!")
     st.stop()
 
-st.title("우리의 암호 메세지")
+st.title("수학 기출문제 모음집")
 st.write("프라이버시 메시지 생성기")
 
 # 🔐 비밀번호 입력
