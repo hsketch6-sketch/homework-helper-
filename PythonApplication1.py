@@ -5,7 +5,7 @@ import base64
 import hashlib
 
 # 페이지 설정
-st.set_page_config(page_title="중학 수학 오답노트 시스템")
+st.set_page_config(page_title="우리의 암호 메세지")
 
 # 🔑 비밀번호 → Fernet 키 변환 함수
 def make_key(password: str):
