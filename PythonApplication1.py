@@ -17,11 +17,11 @@ if st.sidebar.text_input("🔑 우리끼리 비밀번호", type="password") != "
     st.stop()
 
 st.title("수학 기출문제 모음집")
-st.write("프라이버시 메시지 생성기
+st.write("""프라이버시 메시지 생성기
          사용법:
          원하는 비밀번호(해독의 핵심!)을 넣고
          가릴 글자를 칩니다
-         이후 링크와 함께 친구에게 보내주세요!")
+         이후 링크와 함께 친구에게 보내주세요!""")
 
 # 🔐 비밀번호 입력
 password = st.text_input("🔑 비밀번호를 입력하세요", type="password")
