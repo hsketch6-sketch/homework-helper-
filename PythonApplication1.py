@@ -103,5 +103,15 @@ with tab2:
 
 # --- 💡 푸터 ---
 st.divider()
-st.caption("비밀 메세지 제작소 - 중1 개발자의 코딩 실험실")
 
+# --- 📊 방문자 수 카운터 (코드 맨 아래에 추가) ---
+st.divider()
+st.markdown(
+    '<div style="text-align: center;">'
+    '<p style="color: grey; font-size: 0.8em;">방문자 통계</p>'
+    '<img src="https://seeyoufarm.com"/>'
+    '</div>', 
+    unsafe_allow_html=True
+)
+
+st.caption("비밀 메세지 제작소 - 중1 개발자의 코딩 실험실")
