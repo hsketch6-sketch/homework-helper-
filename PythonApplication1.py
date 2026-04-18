@@ -13,7 +13,7 @@ def make_key(password: str):
     key = hashlib.sha256(password.encode()).digest()
     return base64.urlsafe_b64encode(key)
 
-# --- 📱 사이드바 (후원 및 홍보) ---
+# --- 📱 사이드바 ---
 with st.sidebar:
     st.title("👨‍💻 개발자 정보")
     st.info("중1 개발자가 만든 '비밀 메세지' 변환기입니다!")
@@ -21,19 +21,20 @@ with st.sidebar:
     st.subheader("🍬 간식 후원하기")
     st.write("실명 노출 없이 안전하게 응원하실 수 있습니다!")
     
+    # 카카오 오픈프로필 링크
     safe_link = "https://open.kakao.com/o/srNPC0qi" 
     st.link_button("🎁 익명으로 응원 보내기", safe_link)
     
     st.divider()
     st.write("📢 친구들에게 공유하기")
-    # 실제 주소로 업데이트
+    # 실제 주소로 업데이트 완료!
     st.code("https://streamlit.app")
     
     st.caption("© 2024 중1 개발자 프로젝트")
 
 # --- 🏠 메인 화면 ---
 st.title("🔐 비밀 메세지 제작소")
-st.write("부모님이나 선생님께 들키기 싫은 대화, '공부 톡'으로 위장해서 보내세요!")
+st.write("부모님이나 선생님께 들키기 싫은 대화, '인강 링크'로 위장해서 보내세요!")
 
 st.warning("⚠️ 비밀번호를 잊어버리면 개발자도 절대 복구해줄 수 없습니다!")
 
@@ -61,7 +62,7 @@ with tab1:
         else:
             encrypted = cipher.encrypt(msg.encode()).decode()
             
-            # 💡 암호를 더 링크처럼 보이게 '?id=' 또는 '/view/' 등을 추가
+            # 💡 수정 포인트 1: 주소와 암호 사이에 '?v='를 넣어 진짜 링크처럼 구분함
             themes = [
                 f"EBS 강의자료 확인: https://ebs.edu{encrypted}",
                 f"수학 오답노트 PDF: https://class-edu.net{encrypted}",
@@ -73,7 +74,6 @@ with tab1:
             result = random.choice(themes)
             st.success("✅ 위장 성공! 아래 문장을 복사해서 보내세요.")
             st.code(result)
-            st.caption("팁: 받은 친구도 이 사이트에서 동일한 '암호 키'를 입력해야 풀 수 있어요.")
 
 # 📥 복호화 탭
 with tab2:
@@ -81,9 +81,8 @@ with tab2:
     
     if st.button("진짜 내용 보기"):
         try:
-            # 💡 정규표현식을 사용해 문장 속에 숨겨진 '암호 덩어리'만 쏙 뽑아냅니다.
-            # Fernet 암호문은 보통 대문자, 소문자, 숫자, +, /, -가 섞인 긴 문자열입니다.
-            match = re.search(r'[A-Za-z0-9+/=_-]{30,}', received)
+            # 💡 수정 포인트 2: 'gAAAA'로 시작하는 진짜 암호 덩어리만 쏙 골라내는 똑똑한 로직
+            match = re.search(r'gAAAA[A-Za-z0-9\-_=]+', received)
             
             if match:
                 token = match.group()
@@ -91,11 +90,11 @@ with tab2:
                 st.balloons() 
                 st.info(f"🔎 숨겨진 내용: {decrypted}")
             else:
-                st.error("문장에서 암호를 찾을 수 없습니다. 문장 전체를 정확히 입력했나요?")
+                st.error("암호를 찾을 수 없습니다. 문장 전체를 복사했는지 확인하세요!")
         
         except Exception:
-            st.error("❌ 해독 실패! '암호 키'가 틀리거나 메세지가 복사 중에 잘렸을 수 있습니다.")
+            st.error("❌ 해독 실패! '암호 키'가 다르거나 메세지가 복사 중에 잘렸을 수 있습니다.")
 
-# --- 💡 푸터(Footer) ---
+# --- 💡 푸터 ---
 st.divider()
 st.caption("© 2024 중1 개발자 프로젝트. All rights reserved.")
