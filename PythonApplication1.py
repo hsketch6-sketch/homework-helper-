@@ -20,11 +20,11 @@ with st.sidebar:
     
     st.divider()
     
-    # 🍬 간식 후원 섹션 (실명 노출 없는 기프티콘 방식)
+    # 🍬 간식 후원 섹션
     st.subheader("🍬 개발자에게 간식 쏘기")
     st.write("실명 노출 없이 **익명**으로 응원하실 수 있습니다. 제 코딩 작업이 마음에 드셨다면 기프티콘으로 마음을 전해주세요!")
     
-    # [중요] 본인의 카카오톡 오픈채팅 링크를 아래에 넣으세요!
+    # 카카오톡 오픈채팅 링크
     kakao_open_chat = "https://open.kakao.com/o/sPpbP0qi"
     
     st.link_button("🎁 익명 기프티콘 후원하기", kakao_open_chat, help="카카오톡 오픈채팅(익명)으로 연결됩니다.")
@@ -32,7 +32,6 @@ with st.sidebar:
     
     st.divider()
     st.write("📢 친구들에게 공유하기")
-    # 배포 후 실제 주소가 생기면 아래를 수정하세요.
     st.code("https://2wdbuutbgcqtwhqxhktk4z.streamlit.app/") 
     
     st.caption("© 2024 중1 개발자 프로젝트")
@@ -86,7 +85,6 @@ with tab2:
     
     if st.button("진짜 내용 보기"):
         try:
-            # 암호화된 토큰(gAAAA로 시작하는 부분)만 추출
             match = re.search(r'gAAAA[A-Za-z0-9\-_=]+', received)
             
             if match:
@@ -101,13 +99,17 @@ with tab2:
         except Exception:
             st.error("❌ 해독 실패! '암호 키'가 다르거나 메세지가 복사 중에 잘렸을 수 있습니다.")
 
-# --- 💡 푸터 ---
+# --- 📊 방문자 통계 ---
 st.divider()
+# HTML 태그를 직접 써서 이미지가 잘 나오게 고쳤습니다.
+st.markdown(
+    """
+    <div style="text-align: center;">
+        <p style="color: grey; font-size: 0.8em;">누적 방문자 수</p>
+        <img src="https://seeyoufarm.com" alt="방문자수"/>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
-# --- 📊 방문자 통계 (텍스트 버전) ---
-st.divider()
-
-# 방문자 수를 기록할 텍스트 파일이나 DB가 없으므로, 
-# 가장 확실하게 숫자를 보려면 Streamlit Cloud의 'Analytics'를 확인하는 게 정확합니다.
-# 대신 앱 화면에는 방문자에게 안내 문구를 남겨주세요.
-
+st.caption("© 2024 중1 개발자 프로젝트. All rights reserved.")
