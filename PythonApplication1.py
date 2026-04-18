@@ -109,7 +109,7 @@ with col2:
     
     # 💡 팁: 실제 숫자는 Streamlit Cloud 대시보드(Analytics)에서 확인하고 
     # 아래 숫자를 직접 수정해서 업데이트하면 사람들에게 신뢰를 줄 수 있어요!
-    st.metric(label="누적 방문자 수", value="집계 중...", delta="실시간") 
+    st.metric(label="누적 방문자 수", value="8회", delta="오르는중!") 
     
     st.caption("자세한 통계는 개발자 대시보드에서 관리 중입니다.")
 
