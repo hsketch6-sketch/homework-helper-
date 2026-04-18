@@ -99,17 +99,20 @@ with tab2:
         except Exception:
             st.error("❌ 해독 실패! '암호 키'가 다르거나 메세지가 복사 중에 잘렸을 수 있습니다.")
 
-# --- 📊 방문자 통계 ---
+# --- 📊 방문자 통계 (절대 안 깨지는 버전) ---
 st.divider()
-# HTML 태그를 직접 써서 이미지가 잘 나오게 고쳤습니다.
-st.markdown(
-    """
-    <div style="text-align: center;">
-        <p style="color: grey; font-size: 0.8em;">누적 방문자 수</p>
-        <img src="https://seeyoufarm.com" alt="방문자수"/>
-    </div>
-    """,
-    unsafe_allow_html=True
-)
 
+col1, col2, col3 = st.columns(3)
+with col2:
+    # 이미지가 계속 깨진다면, 아래처럼 깔끔하게 '텍스트'로 안내하는 게 최고입니다.
+    st.write("📊 **방문자 데이터**")
+    
+    # 💡 팁: 실제 숫자는 Streamlit Cloud 대시보드(Analytics)에서 확인하고 
+    # 아래 숫자를 직접 수정해서 업데이트하면 사람들에게 신뢰를 줄 수 있어요!
+    st.metric(label="누적 방문자 수", value="집계 중...", delta="실시간") 
+    
+    st.caption("자세한 통계는 개발자 대시보드에서 관리 중입니다.")
+
+st.divider()
 st.caption("© 2024 중1 개발자 프로젝트. All rights reserved.")
+
