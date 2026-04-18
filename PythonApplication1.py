@@ -22,12 +22,11 @@ with st.sidebar:
     st.write("실명 노출 없이 안전하게 응원하실 수 있습니다!")
     
     # 카카오 오픈프로필 링크
-    safe_link = "https://open.kakao.com/o/srNPC0qi" 
+    safe_link = "https://kakao.com" 
     st.link_button("🎁 익명으로 응원 보내기", safe_link)
     
     st.divider()
     st.write("📢 친구들에게 공유하기")
-    # 실제 주소로 업데이트 완료!
     st.code("https://streamlit.app")
     
     st.caption("© 2024 중1 개발자 프로젝트")
@@ -62,7 +61,7 @@ with tab1:
         else:
             encrypted = cipher.encrypt(msg.encode()).decode()
             
-            # 💡 수정 포인트 1: 주소와 암호 사이에 '?v='를 넣어 진짜 링크처럼 구분함
+            # 주소와 암호 사이에 '?v='를 넣어 진짜 링크처럼 구분
             themes = [
                 f"EBS 강의자료 확인: https://ebs.edu{encrypted}",
                 f"수학 오답노트 PDF: https://class-edu.net{encrypted}",
@@ -81,13 +80,15 @@ with tab2:
     
     if st.button("진짜 내용 보기"):
         try:
-            # 💡 수정 포인트 2: 'gAAAA'로 시작하는 진짜 암호 덩어리만 쏙 골라내는 똑똑한 로직
+            # 'gAAAA'로 시작하는 진짜 암호 덩어리만 쏙 골라내는 로직
             match = re.search(r'gAAAA[A-Za-z0-9\-_=]+', received)
             
             if match:
                 token = match.group()
                 decrypted = cipher.decrypt(token.encode()).decode()
-                st.balloons() 
+                
+                # 🎈 풍선 이펙트(st.balloons)를 지우고 깔끔하게 결과만 표시합니다.
+                st.success("🔓 해독 완료!")
                 st.info(f"🔎 숨겨진 내용: {decrypted}")
             else:
                 st.error("암호를 찾을 수 없습니다. 문장 전체를 복사했는지 확인하세요!")
@@ -98,3 +99,4 @@ with tab2:
 # --- 💡 푸터 ---
 st.divider()
 st.caption("© 2024 중1 개발자 프로젝트. All rights reserved.")
+
