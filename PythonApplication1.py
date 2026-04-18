@@ -18,15 +18,15 @@ with st.sidebar:
     st.info("중1 개발자가 만든 '비밀 메세지' 변환기입니다!")
     
     st.subheader("🍬 간식 후원하기")
-    st.write("앱이 마음에 드셨나요? 보내주시는 응원은 다음 앱 제작에 큰 힘이 됩니다!")
+    st.write("실명 노출 없이 안전하게 응원하실 수 있습니다!")
     
-    # 찾아낸 소중한 토스 링크!
-    toss_link = "https://toss.im/_m/NRXUyQt2"
-    st.link_button("🎁 토스로 응원 보내기", toss_link)
+    # 🔴 여기에 카카오 오픈프로필 링크를 넣으세요!
+    # 예: "https://kakao.com"
+    safe_link = "여기에_복사한_오픈프로필_링크_붙여넣기" 
+    st.link_button("🎁 익명으로 응원 보내기", safe_link)
     
     st.divider()
     st.write("📢 친구들에게 공유하기")
-    # 실제 본인의 웹사이트 주소로 적어두면 더 좋습니다.
     st.code("https://streamlit.app")
     
     st.caption("© 2024 중1 개발자 프로젝트")
@@ -101,3 +101,4 @@ with tab2:
 # --- 💡 푸터(Footer) ---
 st.divider()
 st.caption("© 2024 중1 개발자 프로젝트. All rights reserved.")
+
