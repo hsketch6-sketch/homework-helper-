@@ -22,7 +22,7 @@ with st.sidebar:
     
     # 🔴 여기에 카카오 오픈프로필 링크를 넣으세요!
     # 예: "https://kakao.com"
-    safe_link = "여기에_복사한_오픈프로필_링크_붙여넣기" 
+    safe_link = "https://open.kakao.com/o/srNPC0qi" 
     st.link_button("🎁 익명으로 응원 보내기", safe_link)
     
     st.divider()
