@@ -104,14 +104,21 @@ with tab2:
 # --- 💡 푸터 ---
 st.divider()
 
-# --- 📊 방문자 수 카운터 (코드 맨 아래에 추가) ---
+# --- 📊 방문자 통계 (텍스트 버전) ---
 st.divider()
-st.markdown(
-    '<div style="text-align: center;">'
-    '<p style="color: grey; font-size: 0.8em;">방문자 통계</p>'
-    '<img src="https://seeyoufarm.com"/>'
-    '</div>', 
-    unsafe_allow_html=True
-)
 
+# 방문자 수를 기록할 텍스트 파일이나 DB가 없으므로, 
+# 가장 확실하게 숫자를 보려면 Streamlit Cloud의 'Analytics'를 확인하는 게 정확합니다.
+# 대신 앱 화면에는 방문자에게 안내 문구를 남겨주세요.
+
+st.write("📊 **방문자 통계 안내**")
+st.caption("실시간 누적 방문자 수는 개발자 대시보드에서 집계 중입니다.")
+
+# 위에서 시도한 이미지 배지가 계속 깨진다면 아래 코드로 대체해서 
+# 아예 '분석 페이지'로 연결되는 버튼을 만드는 것도 방법입니다.
+if st.button("📈 내 방문자 통계 확인하기 (개발자용)"):
+    st.info("Streamlit Cloud 로그인 후 [Analytics] 탭을 확인하세요!")
+
+st.divider()
 st.caption("비밀 메세지 제작소 - 중1 개발자의 코딩 실험실")
+
