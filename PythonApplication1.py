@@ -29,7 +29,7 @@ with st.sidebar:
     st.write("📢 친구들에게 공유하기")
     st.code("https://streamlit.app")
     
-    st.caption("© 2024 중1 개발자 프로젝트")
+    st.caption("© 2026 중1 개발자 프로젝트")
 
 # --- 🏠 메인 화면 ---
 st.title("🔐 비밀 메세지 제작소")
