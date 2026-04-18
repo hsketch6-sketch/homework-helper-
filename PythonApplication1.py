@@ -21,20 +21,19 @@ with st.sidebar:
     st.subheader("🍬 간식 후원하기")
     st.write("실명 노출 없이 안전하게 응원하실 수 있습니다!")
     
-    # 카카오 오픈프로필 링크
     safe_link = "https://open.kakao.com/o/srNPC0qi" 
     st.link_button("🎁 익명으로 응원 보내기", safe_link)
     
     st.divider()
     st.write("📢 친구들에게 공유하기")
-    # 실제 본인의 웹사이트 주소로 적어두는 것이 좋습니다.
+    # 실제 주소로 업데이트
     st.code("https://streamlit.app")
     
     st.caption("© 2024 중1 개발자 프로젝트")
 
 # --- 🏠 메인 화면 ---
 st.title("🔐 비밀 메세지 제작소")
-st.write("부모님이나 선생님께 들키기 싫은 대화, '인강 링크'로 위장해서 보내세요!")
+st.write("부모님이나 선생님께 들키기 싫은 대화, '공부 톡'으로 위장해서 보내세요!")
 
 st.warning("⚠️ 비밀번호를 잊어버리면 개발자도 절대 복구해줄 수 없습니다!")
 
@@ -62,17 +61,17 @@ with tab1:
         else:
             encrypted = cipher.encrypt(msg.encode()).decode()
             
-            # 💡 암호 코드를 링크의 파라미터처럼 위장
+            # 💡 암호를 더 링크처럼 보이게 '?id=' 또는 '/view/' 등을 추가
             themes = [
-                f"EBS 강의자료 확인하세요: https://ebs.edu{encrypted}",
-                f"수학 오답노트 PDF 공유: https://class-edu.net{encrypted}",
-                f"학원 단어장 배포용 링크: https://voca-study.app{encrypted}",
-                f"수행평가 공지사항 안내: https://school.info{encrypted}",
-                f"영어 듣기평가 MP3 파일: https://edu-audio.com{encrypted}"
+                f"EBS 강의자료 확인: https://ebs.edu{encrypted}",
+                f"수학 오답노트 PDF: https://class-edu.net{encrypted}",
+                f"학원 단어장 배포: https://voca-study.app{encrypted}",
+                f"수행평가 공지사항: https://school.info{encrypted}",
+                f"영어 듣기평가 자료: https://edu-audio.com{encrypted}"
             ]
             
             result = random.choice(themes)
-            st.success("✅ 위장 성공! 아래 '인강 링크'를 복사해서 보내세요.")
+            st.success("✅ 위장 성공! 아래 문장을 복사해서 보내세요.")
             st.code(result)
             st.caption("팁: 받은 친구도 이 사이트에서 동일한 '암호 키'를 입력해야 풀 수 있어요.")
 
@@ -82,19 +81,21 @@ with tab2:
     
     if st.button("진짜 내용 보기"):
         try:
-            # 💡 '=' 뒤에 있는 암호 코드만 쏙 뽑아내는 로직
-            if "=" in received:
-                token = received.split("=")[-1].strip()
+            # 💡 정규표현식을 사용해 문장 속에 숨겨진 '암호 덩어리'만 쏙 뽑아냅니다.
+            # Fernet 암호문은 보통 대문자, 소문자, 숫자, +, /, -가 섞인 긴 문자열입니다.
+            match = re.search(r'[A-Za-z0-9+/=_-]{30,}', received)
+            
+            if match:
+                token = match.group()
                 decrypted = cipher.decrypt(token.encode()).decode()
                 st.balloons() 
                 st.info(f"🔎 숨겨진 내용: {decrypted}")
             else:
-                st.error("형식이 잘못되었습니다. 링크 전체를 붙여넣어 주세요.")
+                st.error("문장에서 암호를 찾을 수 없습니다. 문장 전체를 정확히 입력했나요?")
         
         except Exception:
-            st.error("❌ 해독 실패! 암호 키가 틀리거나 메세지가 오염되었습니다.")
+            st.error("❌ 해독 실패! '암호 키'가 틀리거나 메세지가 복사 중에 잘렸을 수 있습니다.")
 
 # --- 💡 푸터(Footer) ---
 st.divider()
 st.caption("© 2024 중1 개발자 프로젝트. All rights reserved.")
-
