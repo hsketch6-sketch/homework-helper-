@@ -16,18 +16,24 @@ def make_key(password: str):
 # --- 📱 사이드바 ---
 with st.sidebar:
     st.title("👨‍💻 개발자 정보")
-    st.info("중1 개발자가 만든 '비밀 메세지' 변환기입니다!")
+    st.success("중1 개발자가 만든 프로젝트입니다!")
     
-    st.subheader("🍬 간식 후원하기")
-    st.write("실명 노출 없이 안전하게 응원하실 수 있습니다!")
+    st.divider()
     
-    # 카카오 오픈프로필 링크
-    safe_link = "https://kakao.com" 
-    st.link_button("🎁 익명으로 응원 보내기", safe_link)
+    # 🍬 간식 후원 섹션 (실명 노출 없는 기프티콘 방식)
+    st.subheader("🍬 개발자에게 간식 쏘기")
+    st.write("실명 노출 없이 **익명**으로 응원하실 수 있습니다. 제 코딩 작업이 마음에 드셨다면 기프티콘으로 마음을 전해주세요!")
+    
+    # [중요] 본인의 카카오톡 오픈채팅 링크를 아래에 넣으세요!
+    kakao_open_chat = "https://kakao.com" 
+    
+    st.link_button("🎁 익명 기프티콘 후원하기", kakao_open_chat, help="카카오톡 오픈채팅(익명)으로 연결됩니다.")
+    st.caption("편의점, 카페 등 작은 간식도 큰 힘이 됩니다! 🚀")
     
     st.divider()
     st.write("📢 친구들에게 공유하기")
-    st.code("https://streamlit.app")
+    # 배포 후 실제 주소가 생기면 아래를 수정하세요.
+    st.code("https://streamlit.app") 
     
     st.caption("© 2024 중1 개발자 프로젝트")
 
@@ -61,7 +67,7 @@ with tab1:
         else:
             encrypted = cipher.encrypt(msg.encode()).decode()
             
-            # 주소와 암호 사이에 '?v='를 넣어 진짜 링크처럼 구분
+            # 실제 인강 사이트 주소처럼 위장
             themes = [
                 f"EBS 강의자료 확인: https://ebs.edu{encrypted}",
                 f"수학 오답노트 PDF: https://class-edu.net{encrypted}",
@@ -80,14 +86,13 @@ with tab2:
     
     if st.button("진짜 내용 보기"):
         try:
-            # 'gAAAA'로 시작하는 진짜 암호 덩어리만 쏙 골라내는 로직
+            # 암호화된 토큰(gAAAA로 시작하는 부분)만 추출
             match = re.search(r'gAAAA[A-Za-z0-9\-_=]+', received)
             
             if match:
                 token = match.group()
                 decrypted = cipher.decrypt(token.encode()).decode()
                 
-                # 🎈 풍선 이펙트(st.balloons)를 지우고 깔끔하게 결과만 표시합니다.
                 st.success("🔓 해독 완료!")
                 st.info(f"🔎 숨겨진 내용: {decrypted}")
             else:
@@ -98,5 +103,5 @@ with tab2:
 
 # --- 💡 푸터 ---
 st.divider()
-st.caption("© 2024 중1 개발자 프로젝트. All rights reserved.")
+st.caption("비밀 메세지 제작소 - 중1 개발자의 코딩 실험실")
 
