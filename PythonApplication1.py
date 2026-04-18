@@ -25,7 +25,7 @@ with st.sidebar:
     st.write("실명 노출 없이 **익명**으로 응원하실 수 있습니다. 제 코딩 작업이 마음에 드셨다면 기프티콘으로 마음을 전해주세요!")
     
     # [중요] 본인의 카카오톡 오픈채팅 링크를 아래에 넣으세요!
-    kakao_open_chat = "https://kakao.com" 
+    kakao_open_chat = "https://open.kakao.com/o/sPpbP0qi"
     
     st.link_button("🎁 익명 기프티콘 후원하기", kakao_open_chat, help="카카오톡 오픈채팅(익명)으로 연결됩니다.")
     st.caption("편의점, 카페 등 작은 간식도 큰 힘이 됩니다! 🚀")
@@ -33,7 +33,7 @@ with st.sidebar:
     st.divider()
     st.write("📢 친구들에게 공유하기")
     # 배포 후 실제 주소가 생기면 아래를 수정하세요.
-    st.code("https://streamlit.app") 
+    st.code("https://2wdbuutbgcqtwhqxhktk4z.streamlit.app/") 
     
     st.caption("© 2024 중1 개발자 프로젝트")
 
