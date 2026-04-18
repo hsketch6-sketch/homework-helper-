@@ -5,30 +5,43 @@ import base64
 import hashlib
 
 # 페이지 설정
-st.set_page_config(page_title="암호 메세지 제작")
+st.set_page_config(page_title="비밀 메세지 제작소", page_icon="🔐")
 
-# 🔑 비밀번호 → Fernet 키 변환 함수
+# --- 🔑 함수 정의 ---
 def make_key(password: str):
     key = hashlib.sha256(password.encode()).digest()
     return base64.urlsafe_b64encode(key)
-# 친구들만 아는 우리만의 암호 (0515 대신 원하는 비번 넣으세요)
-if st.sidebar.text_input("🔑 우리끼리 비밀번호", type="password") != "jihyun77^^":
-    st.warning("비밀번호를 입력해야 사용할 수 있어!")
-    st.stop()
 
-st.title("암호 메세지 제작")
-st.write("""프라이버시 메시지 생성기
-         사용법:
-         원하는 비밀번호(해독의 핵심!) 을 넣고
-         가릴 글자를 칩니다.
-         이후 링크와 함께 친구에게 보내주세요!""")
-st.write("비밀번호를 망각하시면 개발자도 모릅니다. 잘 기억하거나 어디에 보관해두세요.")
+# --- 📱 사이드바 (후원 및 홍보) ---
+with st.sidebar:
+    st.title("👨‍💻 개발자 정보")
+    st.info("중1 개발자가 만든 '비밀 메세지' 변환기입니다!")
+    
+    st.subheader("🍬 간식 후원하기")
+    st.write("앱이 마음에 드셨나요? 보내주시는 응원은 다음 앱 제작에 큰 힘이 됩니다!")
+    
+    # 찾아낸 소중한 토스 링크!
+    toss_link = "https://toss.im/_m/NRXUyQt2"
+    st.link_button("🎁 토스로 응원 보내기", toss_link)
+    
+    st.divider()
+    st.write("📢 친구들에게 공유하기")
+    # 실제 본인의 웹사이트 주소로 적어두면 더 좋습니다.
+    st.code("https://streamlit.app")
+    
+    st.caption("© 2024 중1 개발자 프로젝트")
 
-# 🔐 비밀번호 입력
-password = st.text_input("🔑 비밀번호를 입력하세요", type="password")
+# --- 🏠 메인 화면 ---
+st.title("🔐 비밀 메세지 제작소")
+st.write("부모님이나 선생님께 들키기 싫은 대화, '공부 톡'으로 위장해서 보내세요!")
+
+st.warning("⚠️ 비밀번호를 잊어버리면 개발자도 절대 복구해줄 수 없습니다!")
+
+# 🔐 비밀번호 입력 (해독 키)
+password = st.text_input("🔑 우리만의 암호 키를 입력하세요", type="password", help="메세지를 잠그고 풀 때 필요한 단어입니다.")
 
 if not password:
-    st.warning("비밀번호를 먼저 입력하세요!")
+    st.info("💡 먼저 암호 키를 설정해야 메세지를 만들 수 있습니다.")
     st.stop()
 
 # 키 생성
@@ -36,13 +49,13 @@ MY_KEY = make_key(password)
 cipher = Fernet(MY_KEY)
 
 # 탭 UI
-tab1, tab2 = st.tabs(["메시지 만들기", "메시지 해독하기"])
+tab1, tab2 = st.tabs(["📤 메세지 숨기기", "📥 메세지 풀기"])
 
 # 📤 암호화 탭
 with tab1:
-    msg = st.text_input("🤫 숨길 내용을 입력하세요 (예: 피방 고?)")
+    msg = st.text_input("🤫 숨길 내용을 입력하세요 (예: 오늘 피방 ㄱ?)")
     
-    if st.button("공부 톡으로 변환"):
+    if st.button("위장 메세지 생성"):
         if not msg:
             st.warning("내용을 입력하세요!")
         else:
@@ -51,16 +64,19 @@ with tab1:
             themes = [
                 f"오늘 숙제 있었냐? [Ref: {encrypted}]",
                 f"시간표가 뭐더라 내일? (ID: {encrypted})",
-                f"야 같이 공부나 좀 하자 {{Code: {encrypted}}}"
+                f"야 같이 공부나 좀 하자 {{Code: {encrypted}}}",
+                f"영어 단어장 어디 갔지? [Ref: {encrypted}]",
+                f"수행평가 공지 봤어? (ID: {encrypted})"
             ]
             
             result = random.choice(themes)
-            st.success("아래 문장을 복사해서 보내세요!")
+            st.success("✅ 위장 성공! 아래 문장을 복사해서 보내세요.")
             st.code(result)
+            st.caption("팁: 받은 친구도 이 사이트에서 동일한 '암호 키'를 입력해야 풀 수 있어요.")
 
 # 📥 복호화 탭
 with tab2:
-    received = st.text_area("🔓 받은 문장을 통째로 붙여넣으세요")
+    received = st.text_area("🔓 받은 위장 문장을 붙여넣으세요")
     
     if st.button("진짜 내용 보기"):
         try:
@@ -76,7 +92,12 @@ with tab2:
             token = received.split(start)[1].split(end)[0].strip()
             decrypted = cipher.decrypt(token.encode()).decode()
             
-            st.info(f"진짜 내용: {decrypted}")
+            st.balloons() # 해독 성공 시 풍선 효과
+            st.info(f"🔎 숨겨진 내용: {decrypted}")
         
         except Exception:
-            st.error("해독 실패! 비밀번호가 틀리거나 형식이 잘못되었습니다.")
+            st.error("❌ 해독 실패! 암호 키가 틀리거나 메세지가 잘못되었습니다.")
+
+# --- 💡 푸터(Footer) ---
+st.divider()
+st.caption("© 2024 중1 개발자 프로젝트. All rights reserved.")
