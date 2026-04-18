@@ -16,7 +16,7 @@ def make_key(password: str):
 # --- 📱 사이드바 ---
 with st.sidebar:
     st.title("👨‍💻 개발자 정보")
-    st.success("중1 개발자가 만든 프로젝트입니다!")
+    st.success("중1 개발자가 만든 프로젝트입니다!(바이브코딩)")
     
     st.divider()
     
